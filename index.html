@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mannheim ECU Programlama | Mercedes Özel Tır & Kamyon Beyin Değişimi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth; /* Smooth scroll for all anchor links */
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); /* Slightly softer dark gradient */
+        }
+        .service-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Light border for subtle depth */
+        }
+        .service-card:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+        }
+        .emergency-btn {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } /* Red pulse effect */
+            70% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        /* Custom styles for the form focus */
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #fbbf24; /* Amber-400 */
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3); /* Amber-400 with opacity */
+        }
+
+        /* Responsive map iframe (maintains aspect ratio) */
+        .map-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Styles for FAQ accordion */
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0; /* Tailwind gray-200 */
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 0; /* py-5 */
+            cursor: pointer;
+            font-weight: 600; /* font-semibold */
+            font-size: 1.25rem; /* text-xl */
+            color: #1a202c; /* Tailwind gray-900 */
+        }
+        .faq-answer {
+            padding-bottom: 1.25rem; /* pb-5 */
+            font-size: 1.125rem; /* text-lg */
+            color: #4a5568; /* Tailwind gray-700 */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding-bottom 0.4s ease-out;
+        }
+        .faq-answer.open {
+            max-height: 200px; /* Adjust as needed to fit content */
+            padding-bottom: 1.25rem;
+            transition: max-height 0.6s ease-in, padding-bottom 0.6s ease-in;
+        }
+        .faq-question i {
+            transition: transform 0.3s ease-in-out;
+        }
+        .faq-question i.rotate-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <a href="https://wa.me/49123456789" target="_blank" aria-label="WhatsApp Destek" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg z-50 hover:bg-green-600 transition-all duration-300">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <a href="tel:+49123456789" aria-label="Acil Telefon Desteği" class="fixed bottom-24 right-6 bg-red-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg z-50 emergency-btn hover:bg-red-700 transition-all duration-300">
+        <i class="fas fa-phone"></i>
+    </a>
+
+    <header id="main-header" class="bg-gray-900 text-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/60x60?text=LOGO" alt="Mannheim ECU Programlama Logo" class="h-12 w-12 mr-3 rounded-full object-cover">
+                <h1 class="text-2xl font-bold">Mannheim <span class="text-amber-400">ECU</span></h1>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#services" class="hover:text-amber-400 transition duration-300 text-lg font-medium">Hizmetler</a></li>
+                    <li><a href="#testimonials" class="hover:text-amber-400 transition duration-300 text-lg font-medium">Referanslar</a></li>
+                    <li><a href="#about" class="hover:text-amber-400 transition duration-300 text-lg font-medium">Hakkımızda</a></li>
+                    <li><a href="#faq" class="hover:text-amber-400 transition duration-300 text-lg font-medium">SSS</a></li>
+                    <li><a href="#contact" class="hover:text-amber-400 transition duration-300 text-lg font-medium">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="menuBtn" aria-label="Mobil Menü Butonu" class="text-white focus:outline-none focus:ring-2 focus:ring-amber-400 rounded p-1">
+                    <i class="fas fa-bars text-3xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden bg-gray-800 md:hidden pb-2">
+            <ul class="px-4 py-2 space-y-2">
+                <li><a href="#services" class="block py-2 px-3 rounded hover:bg-gray-700 hover:text-amber-400 transition duration-300 text-lg">Hizmetler</a></li>
+                <li><a href="#testimonials" class="block py-2 px-3 rounded hover:bg-gray-700 hover:text-amber-400 transition duration-300 text-lg">Referanslar</a></li>
+                <li><a href="#about" class="block py-2 px-3 rounded hover:bg-gray-700 hover:text-amber-400 transition duration-300 text-lg">Hakkımızda</a></li>
+                <li><a href="#faq" class="block py-2 px-3 rounded hover:bg-gray-700 hover:text-amber-400 transition duration-300 text-lg">SSS</a></li>
+                <li><a href="#contact" class="block py-2 px-3 rounded hover:bg-gray-700 hover:text-amber-400 transition duration-300 text-lg">İletişim</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero-gradient text-white py-20 md:py-32 relative overflow-hidden">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12 text-center md:text-left">
+                <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">Mercedes Tır & Kamyonlar İçin <span class="text-amber-400">Gelişmiş ECU</span> Çözümleri</h2>
+                <p class="text-xl opacity-90 mb-8 max-w-lg mx-auto md:mx-0">Mannheim'da Mercedes marka tüm tır ve kamyonlarınız için profesyonel ECU programlama, beyin değişimi, DPF rejenerasyonu ve anahtar şifreleme hizmetleri.</p>
+                <div class="flex flex-col sm:flex-row gap-5 justify-center md:justify-start">
+                    <a href="tel:+49123456789" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-phone mr-3"></i> Acil Destek
+                    </a>
+                    <a href="#contact" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-calendar-alt mr-3"></i> Randevu Al
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <img src="https://images.unsplash.com/photo-1621516248981-d227f6a73c1d?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mercedes Truck ECU Programming" class="rounded-xl shadow-2xl max-w-full h-auto object-cover transform hover:scale-105 transition duration-500 ease-in-out" style="max-height: 450px;">
+            </div>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-0"></div>
+    </section>
+
+    <section id="services" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center mb-16 text-gray-900">Uzmanlık <span class="text-amber-500">Alanlarımız</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-gray-900 h-56 flex items-center justify-center p-6">
+                        <i class="fas fa-microchip text-7xl text-amber-500"></i>
+                    </div>
+                    <div class="p-7 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">ECU Programlama</h3>
+                        <p class="text-gray-700 mb-5 flex-grow">Mercedes marka tüm tır ve kamyonlar için **özel ECU programlama, optimizasyon ve yazılım güncelleme hizmetleri** sunuyoruz. Aracınızın performansını artırırken yakıt verimliliğini optimize eden, son teknolojiye uygun çözümlerle motor ömrünü uzatıyoruz. Diagnostik cihazlarımızla hata kodlarını okuyup yazılım güncellemeleriyle aracınızın beynini en verimli şekilde çalışacak hale getiriyoruz.</p>
+                        <a href="#contact" class="text-amber-600 font-semibold hover:text-amber-700 transition flex items-center group">
+                            Detaylı Bilgi 
+                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-gray-900 h-56 flex items-center justify-center p-6">
+                        <i class="fas fa-brain text-7xl text-amber-500"></i>
+                    </div>
+                    <div class="p-7 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">Beyin Değişimi</h3>
+                        <p class="text-gray-700 mb-5 flex-grow">Arızalanan veya hasar gören motor kontrol ünitesi (ECU) için **profesyonel beyin değişimi hizmeti** sunuyoruz. Yeni beynin aracınızla tamamen uyumlu çalışması için gerekli tüm programlama ve adaptasyon işlemlerini titizlikle gerçekleştiriyoruz. Orjinal yedek parça ve garantili işçilikle aracınızı en kısa sürede yola geri döndürüyoruz.</p>
+                        <a href="#contact" class="text-amber-600 font-semibold hover:text-amber-700 transition flex items-center group">
+                            Detaylı Bilgi 
+                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-gray-900 h-56 flex items-center justify-center p-6">
+                        <i class="fas fa-filter text-7xl text-amber-500"></i>
+                    </div>
+                    <div class="p-7 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">DPF Rejenerasyonu</h3>
+                        <p class="text-gray-700 mb-5 flex-grow">Tır ve kamyonlarda sıkça karşılaşılan Dizel Partikül Filtresi (DPF) tıkanıklığı sorunlarına **etkili ve kalıcı çözümler** sunuyoruz. Zorlamalı rejenerasyon, kimyasal temizlik ve gerektiğinde DPF iptali/devre dışı bırakma hizmetleriyle aracınızın egzoz sistemini optimize ediyoruz. Bu sayede motor performans düşüşlerini ve yakıt tüketimi artışını önlüyoruz.</p>
+                        <a href="#contact" class="text-amber-600 font-semibold hover:text-amber-700 transition flex items-center group">
+                            Detaylı Bilgi 
+                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-gray-900 h-56 flex items-center justify-center p-6">
+                        <i class="fas fa-key text-7xl text-amber-500"></i>
+                    </div>
+                    <div class="p-7 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">Anahtar Şifreleme</h3>
+                        <p class="text-gray-700 mb-5 flex-grow">Mercedes tır ve kamyonlarınız için **anahtar kaybı, arızalı anahtar veya ek anahtar ihtiyacınızda** profesyonel şifreleme ve programlama hizmeti veriyoruz. Gelişmiş ekipmanlarımızla aracınızın immobilizer sistemiyle uyumlu yeni anahtarlarınızı hızlı ve güvenli bir şekilde kodluyoruz. Anahtar kopyalama ve immobilizer sorunlarına kesin çözümler.</p>
+                        <a href="#contact" class="text-amber-600 font-semibold hover:text-amber-700 transition flex items-center group">
+                            Detaylı Bilgi 
+                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-gray-900 h-56 flex items-center justify-center p-6">
+                        <i class="fas fa-cogs text-7xl text-amber-500"></i>
+                    </div>
+                    <div class="p-7 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">Performans Optimizasyonu</h3>
+                        <p class="text-gray-700 mb-5 flex-grow">Aracınızdan maksimum verim almak için **özel performans optimizasyon yazılımları** sunuyoruz. Yakıt ekonomisini artırma, motor gücünü ve torku iyileştirme gibi konularda Mercedes tır ve kamyonlarınıza özel çözümlerle sürüş deneyiminizi üst seviyeye taşıyoruz. Profesyonel chiptuning hizmetlerimizle daha güçlü ve ekonomik bir sürüş sağlıyoruz.</p>
+                        <a href="#contact" class="text-amber-600 font-semibold hover:text-amber-700 transition flex items-center group">
+                            Detaylı Bilgi 
+                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="bg-gray-900 h-56 flex items-center justify-center p-6">
+                        <i class="fas fa-diagnoses text-7xl text-amber-500"></i>
+                    </div>
+                    <div class="p-7 flex flex-col flex-grow">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-900">Kapsamlı Arıza Teşhis</h3>
+                        <p class="text-gray-700 mb-5 flex-grow">Mercedes tır ve kamyonlarınızdaki tüm elektronik ve mekanik arızaları tespit etmek için **en güncel diagnostik cihazları ve yazılımlarını** kullanıyoruz. Hata kodlarını doğru yorumlayarak sorunun kaynağını hızla belirliyor ve kalıcı çözümler üretiyoruz. Motor, şanzıman, fren sistemleri ve diğer tüm elektronik ünitelerdeki arızaları profesyonelce teşhis ediyoruz.</p>
+                        <a href="#contact" class="text-amber-600 font-semibold hover:text-amber-700 transition flex items-center group">
+                            Detaylı Bilgi 
+                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section id="testimonials" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center mb-16 text-gray-900">Müşterilerimiz <span class="text-amber-500">Ne Diyor?</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
+                    <img src="https://via.placeholder.com/100x100?text=MK" alt="Müşteri Adı Soyadı" class="w-24 h-24 rounded-full object-cover mb-6 border-4 border-amber-400">
+                    <p class="text-gray-700 text-lg mb-6 italic">"Mercedes Actros'um yolda kalmıştı, Mannheim ECU ekibi gece yarısı gelip ECU'yu tamir etti. Gerçekten inanılmaz hızlı ve profesyonel bir hizmet sundular. Kesinlikle tavsiye ederim!"</p>
+                    <h4 class="font-bold text-xl text-gray-900">- Mehmet K.</h4>
+                    <p class="text-amber-600 text-sm">Tır Şoförü, Köln</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
+                    <img src="https://via.placeholder.com/100x100?text=AS" alt="Müşteri Adı Soyadı" class="w-24 h-24 rounded-full object-cover mb-6 border-4 border-amber-400">
+                    <p class="text-gray-700 text-lg mb-6 italic">"DPF sorunum vardı ve birçok yerde çözüm bulamamıştım. Mannheim ECU, hem hızlı hem de uygun fiyatlı bir çözüm sundu. Şimdi kamyonum eskisi gibi çalışıyor, teşekkürler!"</p>
+                    <h4 class="font-bold text-xl text-gray-900">- Ayşe S.</h4>
+                    <p class="text-amber-600 text-sm">Nakliye Şirketi Sahibi, Stuttgart</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center text-center">
+                    <img src="https://via.placeholder.com/100x100?text=JD" alt="Müşteri Adı Soyadı" class="w-24 h-24 rounded-full object-cover mb-6 border-4 border-amber-400">
+                    <p class="text-gray-700 text-lg mb-6 italic">"Yeni bir anahtara ihtiyacım vardı ve çok kısa sürede hallettiler. İletişimleri çok iyi ve işlerini gerçekten biliyorlar. Güvenilir bir ekip!"</p>
+                    <h4 class="font-bold text-xl text-gray-900">- Jan D.</h4>
+                    <p class="text-amber-600 text-sm">Bağımsız Tır Sahibi, Mannheim</p>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#contact" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-105">
+                    Siz de Yorum Bırakın
+                </a>
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section id="about" class="py-20 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="https://images.unsplash.com/photo-1621516248981-d227f6a73c1d?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mannheim ECU Programlama Ekibi" class="rounded-xl shadow-2xl w-full object-cover h-96">
+                </div>
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-4xl font-extrabold mb-6">Mannheim'da <span class="text-amber-500">ECU</span> Uzmanınız</h2>
+                    <p class="text-lg opacity-90 mb-5">20 yılı aşkın köklü deneyimimizle, Mercedes marka tüm tır ve kamyonlar için ECU programlama ve elektronik arıza çözümlerinde sektör lideriyiz.</p>
+                    <p class="text-lg opacity-90 mb-6">Mannheim ve çevresindeki müşterilerimize özel hizmet veren firmamız, Mercedes'in en güncel yazılımlarına hakim uzman ekibiyle **7/24 kesintisiz acil destek** sağlamaktadır.</p>
+                    <div class="mt-8">
+                        <h3 class="text-2xl font-bold mb-4 text-amber-400">Neden Bizi Tercih Etmelisiniz?</h3>
+                        <ul class="space-y-3 text-lg">
+                            <li class="flex items-start justify-center md:justify-start">
+                                <i class="fas fa-check-circle text-amber-500 text-xl mt-1 mr-3"></i>
+                                <span>**Mercedes Özel Yazılım Uzmanlığı:** Sadece Mercedes'e odaklı, derinlemesine bilgi.</span>
+                            </li>
+                            <li class="flex items-start justify-center md:justify-start">
+                                <i class="fas fa-check-circle text-amber-500 text-xl mt-1 mr-3"></i>
+                                <span>**Son Teknoloji Ekipmanlar:** En yeni diagnostik ve programlama cihazlarıyla hızlı ve kesin çözümler.</span>
+                            </li>
+                            <li class="flex items-start justify-center md:justify-start">
+                                <i class="fas fa-check-circle text-amber-500 text-xl mt-1 mr-3"></i>
+                                <span>**7/24 Acil Servis Desteği:** Yolda kalmayın, ne zaman ihtiyacınız olursa yanınızdayız.</span>
+                            </li>
+                            <li class="flex items-start justify-center md:justify-start">
+                                <i class="fas fa-check-circle text-amber-500 text-xl mt-1 mr-3"></i>
+                                <span>**Uygun Fiyat Garantisi:** Kaliteli hizmeti en uygun fiyatlarla sunuyoruz.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section class="bg-amber-500 py-16 text-white text-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Aracınız Yolda mı Kaldı? Hemen Bizi Arayın!</h2>
+            <p class="text-xl mb-8">Uzman ekibimiz 7/24 sizin için hazır.</p>
+            <a href="tel:+49123456789" class="bg-white text-amber-700 hover:bg-gray-100 font-bold py-4 px-10 rounded-full text-xl shadow-xl transition duration-300 transform hover:scale-105 inline-flex items-center">
+                <i class="fas fa-headset mr-3"></i> Acil Destek Hattı: +49 123 456 789
+            </a>
+        </div>
+    </section>
+
+    ---
+
+    <section id="faq" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center mb-16 text-gray-900">Sıkça Sorulan <span class="text-amber-500">Sorular</span></h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <p>ECU Programlama ne işe yarar?</p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ECU programlama, aracınızın motor kontrol ünitesindeki yazılımı güncelleyerek veya optimize ederek performans, yakıt verimliliği ve emisyon değerlerinde iyileştirmeler yapmamızı sağlar. Özellikle Mercedes tır ve kamyonlarda motorun daha verimli çalışmasını sağlamak için kritik bir işlemdir.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <p>Beyin değişimi neden gerekli olur?</p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Bir ECU (beyin) çeşitli nedenlerle arızalanabilir: su hasarı, kısa devre, aşırı ısınma veya yazılımsal hatalar. Aracınızın motoru çalışmıyorsa veya ciddi performans sorunları yaşıyorsa, beyin değişimi ve yeni beynin aracınıza uyumlu şekilde programlanması gerekebilir.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <p>DPF rejenerasyonu ne kadar sürer?</p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>DPF rejenerasyon süresi, tıkanıklığın derecesine ve kullanılan yönteme göre değişir. Genellikle zorlamalı rejenerasyon işlemi 30 dakika ile 1 saat arasında sürebilirken, daha kapsamlı temizlik veya iptal işlemleri daha uzun sürebilir. Randevu alırken size daha net bilgi verebiliriz.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <p>7/24 Acil Destek hizmetiniz nasıl çalışıyor?</p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yolda kalan veya acil arıza yaşayan Mercedes tır ve kamyonlarınız için 7 gün 24 saat telefon desteği sağlıyoruz. Durumunuzu değerlendirip en hızlı şekilde size ulaşarak yerinde destek veya atölyemize çekim gibi çözümler sunuyoruz. Acil durum hattımızdan bize ulaşabilirsiniz.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <p>Hizmetleriniz garantili mi?</p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Evet, Mannheim ECU Programlama olarak yaptığımız tüm işlemler ve kullandığımız yedek parçalar garantimiz altındadır. Müşteri memnuniyeti ve güvenliği bizim için önceliktir. Yapılan işin kapsamına göre garanti süreleri değişiklik gösterebilir, detayları hizmet öncesinde size bildiririz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-extrabold text-center mb-16 text-gray-900">Bize <span class="text-amber-500">Ulaşın</span></h2>
+            
+            <div class="flex flex-col md:flex-row gap-10">
+                <div class="md:w-1/2 bg-gray-50 p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-8 text-gray-900">İletişim Bilgileri</h3>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="bg-amber-500 text-white p-4 rounded-full mr-5 shadow-md">
+                                <i class="fas fa-map-marker-alt text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1 text-gray-900">Adresimiz</h4>
+                                <p class="text-gray-700 text-lg">Musterstraße 123, 68165 Mannheim, Almanya</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-amber-500 text-white p-4 rounded-full mr-5 shadow-md">
+                                <i class="fas fa-phone text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1 text-gray-900">Telefon</h4>
+                                <p class="text-gray-700 text-lg">+49 123 456 789</p>
+                                <p class="text-gray-700 text-lg font-bold">Acil Destek: +49 987 654 321</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-amber-500 text-white p-4 rounded-full mr-5 shadow-md">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1 text-gray-900">E-posta</h4>
+                                <p class="text-gray-700 text-lg">info@mannheim-ecu.de</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-amber-500 text-white p-4 rounded-full mr-5 shadow-md">
+                                <i class="fas fa-clock text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-1 text-gray-900">Çalışma Saatleri</h4>
+                                <p class="text-gray-700 text-lg">Pazartesi - Cumartesi: 08:00 - 18:00</p>
+                                <p class="text-gray-700 text-lg">Pazar: **7/24 Acil Servis Hizmeti**</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h4 class="font-bold text-xl mb-5 text-gray-900">Sosyal Medya</h4>
+                        <div class="flex space-x-5">
+                            <a href="#" aria-label="Facebook Sayfamız" class="bg-gray-200 hover:bg-amber-500 hover:text-white text-gray-700 p-4 rounded-full transition duration-300 transform hover:scale-110 shadow-md">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" aria-label="Instagram Sayfamız" class="bg-gray-200 hover:bg-amber-500 hover:text-white text-gray-700 p-4 rounded-full transition duration-300 transform hover:scale-110 shadow-md">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" aria-label="YouTube Kanalımız" class="bg-gray-200 hover:bg-amber-500 hover:text-white text-gray-700 p-4 rounded-full transition duration-300 transform hover:scale-110 shadow-md">
+                                <i class="fab fa-youtube text-xl"></i>
+                            </a>
+                            <a href="https://wa.me/49123456789" target="_blank" aria-label="WhatsApp ile İletişim" class="bg-gray-200 hover:bg-amber-500 hover:text-white text-gray-700 p-4 rounded-full transition duration-300 transform hover:scale-110 shadow-md">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 bg-gray-50 p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-8 text-gray-900">Randevu veya Bilgi Talebi Formu</h3>
+                    <form>
+                        <div class="mb-5">
+                            <label for="name" class="block text-gray-700 font-semibold mb-2">Adınız Soyadınız <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="Adınız Soyadınız">
+                        </div>
+                        <div class="mb-5">
+                            <label for="phone" class="block text-gray-700 font-semibold mb-2">Telefon Numaranız <span class="text-red-500">*</span></label>
+                            <input type="tel" id="phone" name="phone" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="+49 123 456 789">
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block text-gray-700 font-semibold mb-2">E-posta Adresiniz</label>
+                            <input type="email" id="email" name="email" class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="ornek@email.com">
+                        </div>
+                        <div class="mb-5">
+                            <label for="vehicle" class="block text-gray-700 font-semibold mb-2">Araç Bilgisi (Marka, Model, Yıl) <span class="text-red-500">*</span></label>
+                            <input type="text" id="vehicle" name="vehicle" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="Mercedes Actros 1845, 2020">
+                        </div>
+                        <div class="mb-5">
+                            <label for="service" class="block text-gray-700 font-semibold mb-2">İlgilendiğiniz Hizmet Türü <span class="text-red-500">*</span></label>
+                            <select id="service" name="service" required class="w-full px-5 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200">
+                                <option value="">Lütfen Seçiniz</option>
+                                <option value="ecu">ECU Programlama</option>
+                                <option value="brain">Beyin Değişimi</option>
+                                <option value="dpf">DPF Rejenerasyonu</option>
+                                <option value="key">Anahtar Şifreleme</option>
+                                <option value="performance">Performans Optimizasyonu</option>
+                                <option value="diagnosis">Kapsamlı Arıza Teşhis</option>
+                                <option value="other">Diğer</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">Mesajınız <span class="text-red-500">*</span></label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="Sorununuzu veya talebinizi detaylıca açıklayınız..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center text-lg">
+                            <i class="fas fa-paper-plane mr-3"></i> Randevu / Bilgi Talebi Gönder
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2636.335384666324!2d8.471928076634861!3d49.48915446077399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479709d7a22a9693%3A0x6b1f2b4c1a5d6f1a!2sMannheim!5e0!3m2!1str!2sde!4v1719629088663!5m2!1str!2sde" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300 py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center justify-center md:justify-start mb-3">
+                        <img src="https://via.placeholder.com/50x50?text=LOGO" alt="Mannheim ECU Programlama Logo" class="h-10 w-10 mr-3 rounded-full object-cover">
+                        <h3 class="text-xl font-bold text-white">Mannheim <span class="text-amber-400">ECU</span> Programlama</h3>
+                    </div>
+                    <p class="text-gray-400 max-w-sm mx-auto md:mx-0">Mercedes Tır & Kamyonlar için Almanya'nın Mannheim şehrindeki güvenilir ECU uzmanınız.</p>
+                </div>
+                
+                <div class="mb-8 md:mb-0">
+                    <h4 class="font-bold text-white text-lg mb-4">Hızlı Bağlantılar</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="hover:text-amber-400 transition duration-300">Hizmetlerimiz</a></li>
+                        <li><a href="#testimonials" class="hover:text-amber-400 transition duration-300">Referanslar</a></li>
+                        <li><a href="#about" class="hover:text-amber-400 transition duration-300">Hakkımızda</a></li>
+                        <li><a href="#faq" class="hover:text-amber-400 transition duration-300">SSS</a></li>
+                        <li><a href="#contact" class="hover:text-amber-400 transition duration-300">İletişim</a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-8 md:mb-0">
+                    <h4 class="font-bold text-white text-lg mb-4">Bizi Takip Edin</h4>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-amber-400 transition duration-300 text-2xl">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-amber-400 transition duration-300 text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="text-gray-400 hover:text-amber-400 transition duration-300 text-2xl">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://wa.me/49123456789" target="_blank" aria-label="WhatsApp" class="text-gray-400 hover:text-amber-400 transition duration-300 text-2xl">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-8 text-center">
+                <p class="text-gray-500 text-sm">© 2023 Mannheim ECU Programlama. Tüm hakları saklıdır. | Almanya, Mannheim</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links and close mobile menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Get the height of the fixed header
+                    const headerOffset = document.getElementById('main-header').offsetHeight;
+                    // Calculate the position to scroll to, adjusted by the header height
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Form submission (placeholder)
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Burada formu sunucuya gönderme veya bir e-posta hizmeti kullanma mantığı eklenebilir.
+                // Şimdilik sadece bir uyarı gösteriyoruz.
+                alert('Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.');
+                this.reset(); // Formu sıfırla
+            });
+        }
+
+        // FAQ Accordion Toggle
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+
+            if (answer.classList.contains('open')) {
+                answer.classList.remove('open');
+                answer.style.maxHeight = '0';
+                icon.classList.remove('rotate-icon');
+            } else {
+                // Close any open FAQ items first
+                document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+                    openAnswer.classList.remove('open');
+                    openAnswer.style.maxHeight = '0';
+                    openAnswer.previousElementSibling.querySelector('i').classList.remove('rotate-icon');
+                });
+
+                answer.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + "px"; // Set max-height to scrollHeight
+                icon.classList.add('rotate-icon');
+            }
+        }
+    </script>
+</body>
+</html>
