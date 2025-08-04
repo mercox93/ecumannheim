@@ -497,38 +497,46 @@
                 <div class="md:w-1/2 bg-gray-50 p-8 rounded-xl shadow-lg">
                     <h3 class="text-2xl font-bold mb-8 text-gray-900">Termin- oder Informationsanfrageformular</h3>
                     <form>
-                       <section class="form" id="kontakt">
-  <div class="form-text">
-    <h2>Termin- oder Informationsanfrageformular</h2>
-    <p>Kontaktieren Sie uns für eine Terminvereinbarung oder Informationen. Unser Team hilft Ihnen gerne weiter.</p>
-  </div>
-  <div class="form-box">
-    <form action="https://formspree.io/f/xwpqldbp" method="POST" class="form-container">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="Name" placeholder="Name" required>
-
-      <label for="company">Firma:</label>
-      <input type="text" id="company" name="Company" placeholder="Firma">
-
-      <label for="phone">Telefonnummer:</label>
-      <input type="text" id="phone" name="Phone" placeholder="Telefonnummer">
-
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="Email" placeholder="E-mail" required>
-
-      <label for="car">Fahrzeug (optional):</label>
-      <input type="text" id="car" name="Vehicle" placeholder="z.B. Mercedes W212, Renault Megane...">
-
-      <label for="message">Nachricht:</label>
-      <textarea id="message" name="Message" placeholder="Ihre Nachricht..." required></textarea>
-
-      <input type="hidden" name="_redirect" value="https://mercox93.github.io/ecumannheim/danke.html">
-
-      <button type="submit">Senden</button>
-    </form>
-  </div>
-</section>
-
+                        <div class="mb-5">
+                            <label for="name" class="block text-gray-700 font-semibold mb-2">Ihr Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="Ihr Name">
+                        </div>
+                        <div class="mb-5">
+                            <label for="phone" class="block text-gray-700 font-semibold mb-2">Ihre Telefonnummer <span class="text-red-500">*</span></label>
+                            <input type="tel" id="phone" name="phone" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="+49 123 456 789">
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block text-gray-700 font-semibold mb-2">Ihre E-Mail-Adresse</label>
+                            <input type="email" id="email" name="email" class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="beispiel@email.com">
+                        </div>
+                        <div class="mb-5">
+                            <label for="vehicle" class="block text-gray-700 font-semibold mb-2">Fahrzeuginformationen (Marke, Modell, Baujahr) <span class="text-red-500">*</span></label>
+                            <input type="text" id="vehicle" name="vehicle" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="Mercedes Actros 1845, 2020">
+                        </div>
+                        <div class="mb-5">
+                            <label for="service" class="block text-gray-700 font-semibold mb-2">Art der Dienstleistung, an der Sie interessiert sind <span class="text-red-500">*</span></label>
+                            <select id="service" name="service" required class="w-full px-5 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200">
+                                <option value="">Bitte wählen Sie</option>
+                                <option value="ecu">ECU Programmierung</option>
+                                <option value="brain">Steuergeräte-Austausch</option>
+                                <option value="dpf">DPF Regeneration</option>
+                                <option value="key">Schlüsselcodierung</option>
+                                <option value="performance">Leistungsoptimierung</option>
+                                <option value="diagnosis">Umfassende Fehlerdiagnose</option>
+                                <option value="other">Sonstiges</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">Ihre Nachricht <span class="text-red-500">*</span></label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-200" placeholder="Beschreiben Sie Ihr Problem oder Ihre Anfrage detailliert..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center text-lg">
+                            <i class="fas fa-paper-plane mr-3"></i> Termin / Informationsanfrage senden
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 
     
